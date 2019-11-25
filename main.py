@@ -6,7 +6,7 @@ import random
 import copy
 import torch
 import gc
-import cPickle as pickle
+import pickle
 import torch.autograd as autograd
 import torch.nn as nn
 import torch.nn.functional as F
