@@ -1,8 +1,3 @@
-# -*- coding: utf-8 -*-
-# @Author: Jie Yang
-# @Date:   2017-12-04 23:19:38
-# @Last Modified by:   Jie Yang,     Contact: jieynlp@gmail.com
-# @Last Modified time: 2018-05-27 22:48:17
 import torch
 import torch.autograd as autograd
 import torch.nn as nn
@@ -30,7 +25,7 @@ class CRF(nn.Module):
 
     def __init__(self, tagset_size, gpu):
         super(CRF, self).__init__()
-        print "build batched crf..."
+        print("build batched crf...")
         self.gpu = gpu
         # Matrix of transition parameters.  Entry i,j is the score of transitioning *to* i *from* j.
         self.average_batch = False

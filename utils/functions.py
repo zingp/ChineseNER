@@ -1,8 +1,3 @@
-# -*- coding: utf-8 -*-
-# @Author: Jie
-# @Date:   2017-06-15 14:23:06
-# @Last Modified by:   Jie Yang,     Contact: jieynlp@gmail.com
-# @Last Modified time: 2018-05-12 22:09:37
 import sys
 import numpy as np
 from alphabet import Alphabet
@@ -331,5 +326,5 @@ def load_pretrain_emb(embedding_path):
 
 if __name__ == '__main__':
     a = np.arange(9.0)
-    print a
-    print norm2one(a)
+    print(a)
+    print(norm2one(a))

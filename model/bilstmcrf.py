@@ -1,8 +1,3 @@
-# -*- coding: utf-8 -*-
-# @Author: Jie Yang
-# @Date:   2017-10-17 16:47:32
-# @Last Modified by:   Jie Yang,     Contact: jieynlp@gmail.com
-# @Last Modified time: 2018-01-05 23:15:17
 
 import torch
 import torch.autograd as autograd
@@ -15,7 +10,7 @@ from crf import CRF
 class BiLSTM_CRF(nn.Module):
     def __init__(self, data):
         super(BiLSTM_CRF, self).__init__()
-        print "build batched lstmcrf..."
+        print("build batched lstmcrf...")
         self.gpu = data.HP_gpu
         ## add two more label for downlayer lstm, use original label size for CRF
         label_size = data.label_alphabet_size
