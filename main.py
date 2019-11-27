@@ -1,6 +1,9 @@
-
+import os
 import time
 import sys
+base_dir = os.path.dirname(os.path.abspath((os.path.dirname(__file__))))
+print(base_dir)
+sys.path.append(base_dir)
 import argparse
 import random
 import copy

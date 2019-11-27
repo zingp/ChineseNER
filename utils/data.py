@@ -2,7 +2,7 @@ import sys
 import numpy as np
 from alphabet import Alphabet
 from functions import *
-import cPickle as pickle
+import pickle
 from gazetteer import Gazetteer
 
 
@@ -148,18 +148,18 @@ class Data:
 
     def build_alphabet(self, input_file):
         in_lines = open(input_file,'r').readlines()
-        for idx in xrange(len(in_lines)):
+        for idx in range(len(in_lines)):
             line = in_lines[idx]
             if len(line) > 2:
                 pairs = line.strip().split()
-                word = pairs[0].decode('utf-8')
+                word = pairs[0]
                 if self.number_normalized:
                     word = normalize_word(word)
                 label = pairs[-1]
                 self.label_alphabet.add(label)
                 self.word_alphabet.add(word)
                 if idx < len(in_lines) - 1 and len(in_lines[idx+1]) > 2:
-                    biword = word + in_lines[idx+1].strip().split()[0].decode('utf-8')
+                    biword = word + in_lines[idx+1].strip().split()[0]
                 else:
                     biword = word + NULLKEY
                 self.biword_alphabet.add(biword)
@@ -188,7 +188,7 @@ class Data:
         if gaz_file:
             fins = open(gaz_file, 'r').readlines()
             for fin in fins:
-                fin = fin.strip().split()[0].decode('utf-8')
+                fin = fin.strip().split()[0]
                 if fin:
                     self.gaz.insert(fin, "one_source")
             print("Load gaz file: ", gaz_file, " total size:", self.gaz.size())
@@ -201,7 +201,7 @@ class Data:
         word_list = []
         for line in in_lines:
             if len(line) > 3:
-                word = line.split()[0].decode('utf-8')
+                word = line.split()[0]
                 if self.number_normalized:
                     word = normalize_word(word)
                 word_list.append(word)
