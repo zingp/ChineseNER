@@ -98,7 +98,8 @@ def save_data_setting(data, save_file):
     new_data.raw_Ids = []
     ## save data settings
     with open(save_file, 'w') as fp:
-        pickle.dump(new_data, fp)
+        print("data: ", type(new_data))
+        pickle.dump(str(new_data), fp)
     print("Data setting saved to file: ", save_file)
 
 
@@ -392,11 +393,11 @@ if __name__ == '__main__':
     save_model_dir = args.savemodel
     gpu = torch.cuda.is_available()
 
-    char_emb = "data/gigaword_chn.all.a2b.uni.ite50.vec"
+    #char_emb = "data/gigaword_chn.all.a2b.uni.ite50.vec"
     bichar_emb = None
-    gaz_file = "data/ctb.50d.vec"
-    # gaz_file = None
-    # char_emb = None
+    #gaz_file = "data/ctb.50d.vec"
+    gaz_file = None
+    char_emb = None
     #bichar_emb = None
 
     print("CuDNN:", torch.backends.cudnn.enabled)
