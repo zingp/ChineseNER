@@ -97,14 +97,15 @@ def save_data_setting(data, save_file):
     new_data.test_Ids = []
     new_data.raw_Ids = []
     ## save data settings
-    with open(save_file, 'w') as fp:
+    with open(save_file, 'wb') as fp:
         print("data: ", type(new_data))
-        pickle.dump(str(new_data), fp)
+        #print(new_data)
+        pickle.dump(new_data, fp)
     print("Data setting saved to file: ", save_file)
 
 
 def load_data_setting(save_file):
-    with open(save_file, 'r') as fp:
+    with open(save_file, 'rb') as fp:
         data = pickle.load(fp)
     print("Data setting loaded from file: ", save_file)
     data.show_data_summary()
@@ -181,7 +182,8 @@ def batchify_with_label(input_batch_list, gpu, volatile_flag=False):
     chars = [sent[2] for sent in input_batch_list]
     gazs = [sent[3] for sent in input_batch_list]
     labels = [sent[4] for sent in input_batch_list]
-    word_seq_lengths = torch.LongTensor(map(len, words))
+    # print("wordsssss:", map(len, words))
+    word_seq_lengths = torch.LongTensor(list(map(len, words)))
     max_seq_len = word_seq_lengths.max()
     word_seq_tensor = autograd.Variable(torch.zeros((batch_size, max_seq_len)), volatile =  volatile_flag).long()
     biword_seq_tensor = autograd.Variable(torch.zeros((batch_size, max_seq_len)), volatile =  volatile_flag).long()
@@ -191,7 +193,8 @@ def batchify_with_label(input_batch_list, gpu, volatile_flag=False):
         word_seq_tensor[idx, :seqlen] = torch.LongTensor(seq)
         biword_seq_tensor[idx, :seqlen] = torch.LongTensor(biseq)
         label_seq_tensor[idx, :seqlen] = torch.LongTensor(label)
-        mask[idx, :seqlen] = torch.Tensor([1]*seqlen)
+        #print(idx, seqlen)
+        mask[idx, :seqlen] = torch.Tensor(torch.Tensor([1])*seqlen)
     word_seq_lengths, word_perm_idx = word_seq_lengths.sort(0, descending=True)
     word_seq_tensor = word_seq_tensor[word_perm_idx]
     biword_seq_tensor = biword_seq_tensor[word_perm_idx]
@@ -200,7 +203,8 @@ def batchify_with_label(input_batch_list, gpu, volatile_flag=False):
     mask = mask[word_perm_idx]
     ### deal with char
     # pad_chars (batch_size, max_seq_len)
-    pad_chars = [chars[idx] + [[0]] * (max_seq_len-len(chars[idx])) for idx in range(len(chars))]
+    print(type(chars[idx]), max_seq_len, len(chars[idx]))
+    pad_chars = [chars[idx] + torch.Tensor([[0]]) * torch.Tensor(max_seq_len-len(chars[idx])) for idx in range(len(chars))]
     length_list = [map(len, pad_char) for pad_char in pad_chars]
     max_word_len = max(map(max, length_list))
     char_seq_tensor = autograd.Variable(torch.zeros((batch_size, max_seq_len, max_word_len)), volatile =  volatile_flag).long()
